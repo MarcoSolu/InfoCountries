@@ -34,7 +34,7 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start md:justify-center md:items-center">
                 <div className="flex flex-shrink-0 items-center">
                   <Link href='/'>
-                    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">Info<span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Travel</span></h1>
+                    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">Info<span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Countries</span></h1>
                   </Link>
                 </div>
                 <div className="hidden sm:flex sm:items-center sm:justify-end ml-auto">

@@ -6,7 +6,7 @@ const JoinDiv = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="bg-gray-800 rounded-lg p-8 shadow-md max-w-xl text-center text-white mb-40">
         <h1 className="text-6xl font-bold mb-4 text-blue-500">
-          Welcome to InfoTravel!
+          Welcome to InfoCountries!
         </h1>
         <p className="text-2xl text-gray-300 mb-6">
           Search for information about multiple countries.

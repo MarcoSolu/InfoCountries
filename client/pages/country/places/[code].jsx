@@ -18,9 +18,24 @@ const countryPlaces = () => {
   const [minPop, setMinPop] = useState('');
   const [maxPop, setMaxPop] = useState('');
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const placesPerPage = 6;
 
   const handleSearch = () => {
+    setCurrentPage(0);
     fetchPlacesData();
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < (totalPlaces.totalCount - (placesPerPage - 1))) {
+      setCurrentPage(prevState => prevState + placesPerPage);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(prevState => prevState - placesPerPage);
+    }
   };
 
   const fetchPlacesData = async () => {
@@ -34,6 +49,8 @@ const countryPlaces = () => {
             minPopulation: minPop,
             maxPopulation: maxPop,
             namePrefix: search,
+            offset: currentPage,
+            limit: placesPerPage,
           },
           headers: {
             'X-RapidAPI-Key': '16cf8b464bmshde4292c1949a974p15873djsn45706d771381',
@@ -45,10 +62,13 @@ const countryPlaces = () => {
           throw new Error('No Places found, try later');
         } else {
           setCountryPlaces(response.data.data);
-          setTotalPlaces(response.data.metadata)
+          setTotalPlaces(response.data.metadata);
         }
       }
     } catch (err) {
+      if (err.response.status === 429) {
+        alert("Too many request, try later");
+      }
       console.log(err.message);
     } finally {
       setIsLoadingDetails(false);
@@ -81,7 +101,7 @@ useEffect(() => {
     router.push('/login');
   }
   fetchPlacesData();
-}, [code, authContext.userData, router]);
+}, [code, authContext.userData, router, currentPage]);
 
   console.log(countryPlaces);
   console.log(totalPlaces);
@@ -89,79 +109,101 @@ useEffect(() => {
   return (
     <div>
         <TitleNavbar />
-        <div>
-          <div className='flex justify-center'>
-              <div class="relative mt-1 w-1/3">
-              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                  </svg>
-              </div>
-              <input 
-              type="search" 
+        <div className="bg-gray-800 p-4 rounded-lg shadow-md max-w-xl mx-auto mt-8 text-white">
+
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
+            </div>
+            <input
+              type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              id="default-search" 
-              class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-              placeholder="Search for places" 
-              />
-              </div>
-              <div className='mx-5 mt-4 h-8 flex items-center bg-gray-700 border-gray-300 rounded-lg px-4'>
-                <h2 className='text-lg font-semibold mr-2'>Places founded: </h2>
-                <span className='text-blue-500'>{totalPlaces.totalCount}</span>
-              </div>
+              id="default-search"
+              className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search for places"
+            />
+            
           </div>
 
-          <div className='flex justify-center'>
-              <div class="relative mt-1 w-1/4 mx-5">
-              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                  </svg>
-              </div>
-              <input 
-              type="search" 
-              value={minPop}
-              onChange={(e) => setMinPop(e.target.value)}
-              id="default-search" 
-              class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-              placeholder="If you want, set the min population" 
-              />
-              </div>
+          <div className="flex items-center">
+              <h2 className="text-lg font-semibold mr-2">Places found:</h2>
+              <span className="text-blue-500">{totalPlaces.totalCount}</span>
+            </div>
 
-              <div class="relative mt-1 w-1/4 mx-5">
-              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                  </svg>
+          <div className="flex justify-between mt-4">
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
               </div>
-              <input 
-              type="search" 
-              value={maxPop}
-              onChange={(e) => setMaxPop(e.target.value)}
-              id="default-search" 
-              class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-              placeholder="If you want, set the max population" 
+              <input
+                type="search"
+                value={minPop}
+                onChange={(e) => setMinPop(e.target.value)}
+                id="minPop"
+                className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Min Population"
               />
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
               </div>
+              <input
+                type="search"
+                value={maxPop}
+                onChange={(e) => setMaxPop(e.target.value)}
+                id="maxPop"
+                className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Max Population"
+              />
+            </div>
           </div>
 
-          <div className='flex justify-center mt-1'>
-            <button 
-                type="button"
-                onClick={handleSearch}
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Search
+          <div className="flex justify-center mt-4">
+            <button
+              type="button"
+              onClick={handleSearch}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Search
             </button>
           </div>
+        </div>
 
-          <div className='flex justify-center items-center mt-16'>
-            {isLoadingDetails ? (<Loading />) : ( <div className='grid grid-cols-3 gap-2'>
+          <div className='flex justify-center items-center mt-8'>
+            {isLoadingDetails ? (<Loading />) : (
+            <div>
+              <div className='grid grid-cols-3 gap-2'>
                 {elements}
-            </div>)}
+            </div>
+            <div className='mt-4 flex justify-center'>
+            <button
+              onClick={handlePreviousPage}
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold mx-2 py-2 px-4 rounded'
+            >
+              Previous
+            </button>
+            <button
+              onClick={handleNextPage}
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold mx-2 py-2 px-4 rounded'
+            >
+              Next
+            </button>
+          </div>
+          </div>
+            )}
           </div>
       </div>
-    </div>
+    
   )
 }
 

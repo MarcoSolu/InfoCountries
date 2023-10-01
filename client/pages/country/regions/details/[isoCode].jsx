@@ -37,6 +37,9 @@ const regionsDetails = () => {
           }
         }
       } catch (err) {
+        if (err.response.status === 429) {
+          alert("Too many request, try later");
+        }
         console.log(err.message);
       } finally {
         setIsLoadingDetails(false);

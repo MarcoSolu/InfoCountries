@@ -18,6 +18,7 @@ const countryDetails = () => {
 
   const [countryDetails, setCountryDetails] = useState({});
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  
 
   const fetchDetailsData = async () => {
     try {
@@ -41,6 +42,11 @@ const countryDetails = () => {
         }
       }
     } catch (err) {
+      if (err.response && err.response.status === 429) {
+        alert("Too many request, try later");
+        const retryAfter = err.response.headers['Retry-After'];
+        setTimeout(fetchDetailsData, retryAfter * 5000);
+      }
       console.log(err.message);
     } finally {
       setIsLoadingDetails(false);
@@ -60,13 +66,17 @@ const countryDetails = () => {
     <div>
       <TitleNavbar />
       <div>
-          {isLoadingDetails ? (<Loading />) : ( <div className='flex justify-center mt-2'>
+          {isLoadingDetails ? (
+          <div className='flex justify-center items-center h-screen'> 
+            <Loading />
+          </div>
+            ) : ( <div className='flex justify-center mt-2'>
             <div className="bg-gray-800 rounded-lg p-8 shadow-md max-w-xl text-center text-white mb-40">
               <Image 
-              width={300} 
-              height={300} 
-              alt='country flag'
-              src={countryDetails.flagImageUri} 
+                width={300} 
+                height={300} 
+                alt='country flag'
+                src={countryDetails.flagImageUri} 
               />
               <h1 className="text-2xl font-bold mt-4">{countryDetails.name}</h1>
               <div className='flex flex-col m-2'>

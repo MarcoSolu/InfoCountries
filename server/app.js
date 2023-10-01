@@ -52,7 +52,9 @@ app.post("/register", async (req, res) => {
         res.status(201).json(user);
     } catch (err) {
         console.log(err);
-        res.status(500).send("Internal Server Error");
+        if (!res.headersSent) {
+          res.status(500).send("Internal Server Error");
+      }
     }
     });
     
@@ -79,12 +81,14 @@ app.post("/register", async (req, res) => {
         
               user.token = token;
         
-              res.status(200).json(user);
+              return res.status(200).json(user);
             }
-            res.status(400).send("Invalid Credentials");
+            return res.status(400).send("Invalid Credentials");
           } catch (err) {
             console.log(err);
-            res.status(500).send("Internal Server Error");
+            if (!res.headersSent) {
+              res.status(500).send("Internal Server Error");
+          }
           }
     
     });
@@ -109,10 +113,12 @@ app.post("/register", async (req, res) => {
         user.resetPasswordToken = undefined;
         user.resetPasswordTokenExpiration = undefined;
     
-        res.status(200).json({ message: "Password changed successfully" });
+        return res.status(200).json({ message: "Password changed successfully" });
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Internal Server Error" });
+        if (!res.headersSent) {
+          res.status(500).send("Internal Server Error");
+      }
       }
     });
 

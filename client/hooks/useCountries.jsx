@@ -7,12 +7,6 @@ export const useCountries = () => {
     const [search, setSearch] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    function getRandomOffset(maxOffset) {
-        return Math.floor(Math.random() * maxOffset);
-      }
-      
-    const maxOffset = 198;
-
     const fetchCountryData = async () => {
         try {
             setIsLoading(true)
