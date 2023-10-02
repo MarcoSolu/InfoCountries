@@ -1,6 +1,5 @@
 import { useEffect, useContext } from 'react';
 import UserNavbar from '@/components/UserNavbar';
-import Link from 'next/link';
 import CountryGrid from '@/components/CountryGrid';
 import { useRouter } from 'next/router';
 import { AuthContext } from '@/context/AuthContext';
