@@ -16,7 +16,7 @@ export const useNewPassword = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:3001/change-password',
+        'https://infocountries.onrender.com/change-password',
         { email, newPassword: password }
       );
 
