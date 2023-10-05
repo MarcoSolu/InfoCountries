@@ -1,4 +1,3 @@
-// useNewPassword.js
 import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '@/context/AuthContext';
@@ -28,7 +27,7 @@ export const useNewPassword = () => {
         },
       });
 
-      // Redirect to a success page or any appropriate route
+      
     } catch (error) {
       console.error('Password change error:', error);
       const errorMessage =
