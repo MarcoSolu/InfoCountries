@@ -9,10 +9,10 @@ const JoinDiv = () => {
           Welcome to InfoCountries!
         </h1>
         <p className="text-2xl text-gray-300 mb-6">
-          Search for information about multiple countries.
+        This project aims to offer an informative perspective of our planet.
         </p>
         <p className="text-xl text-gray-300 mb-6">
-        You can search for information from a wide range of countries.
+        Our website provides users with the opportunity to explore certain details of different nations around the world. Users can select the country of their interest and discover relevant information about regions and cities within that country.
         </p>
         <Link href='/signup'>
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-6 rounded-full transition duration-300 transform hover:scale-105 focus:outline-none">
