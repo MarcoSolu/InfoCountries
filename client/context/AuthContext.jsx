@@ -18,12 +18,14 @@ const authReducer = (state, action) => {
         location: action.payload?.location ?? null,
         id: action.payload?.id ?? "",
         isLoggedIn: true,
+        isAuthenticated: true,
         favoriteCountries: existingFavoriteCountries
       };
     case "LOGOUT":
       return {
         ...state,
-        isLoggedIn: false
+        isLoggedIn: false,
+        isAuthenticated: false
       }
     case "CHANGE_PASSWORD":
       return {
