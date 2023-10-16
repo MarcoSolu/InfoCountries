@@ -1,7 +1,6 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useCountries } from '@/hooks/useCountries';
-import { FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
 import Loading from './Loading';
 import { AuthContext } from '@/context/AuthContext';
@@ -11,6 +10,8 @@ const CountryGrid = () => {
 
   const { userData } = useContext(AuthContext);
   const favoriteCountries = userData?.favoriteCountries || [];
+
+  console.log(userData);
 
   const handleSearch = () => {
     setCurrentPage(0);
