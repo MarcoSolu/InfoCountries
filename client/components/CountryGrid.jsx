@@ -6,48 +6,92 @@ import Link from 'next/link';
 import Loading from './Loading';
 
 const CountryGrid = () => {
+  const {
+    countries,
+    search,
+    setSearch,
+    currentPage,
+    setCurrentPage,
+    totalCountries,
+    countriesPerPage,
+    fetchCountryData,
+    isLoading,
+    favorites,
+  } = useCountries();
 
-    const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading } = useCountries();
-    
-    const handleSearch = () => {
-        setCurrentPage(0);
+  const handleSearch = () => {
+    setCurrentPage(0);
+    fetchCountryData();
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalCountries.totalCount - countriesPerPage) {
+      setCurrentPage((prevState) => prevState + countriesPerPage);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage((prevState) => prevState - countriesPerPage);
+    }
+  };
+
+  const toggleFavorite = (country) => {
+    if (favorites.includes(country.code)) {
+      removeFavorite(country.code);
+    } else {
+      addFavorite(country.code);
+    }
+  };
+
+  const addFavorite = async (countryCode) => {
+    try {
+      const response = await axios.post('/add-favorite', { countryCode });
+      if (response.status === 200) {
+        fetchCountryData(); 
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFavorite = async (countryCode) => {
+    try {
+      const response = await axios.post('/remove-favorite', { countryCode });
+      if (response.status === 200) {
         fetchCountryData();
-    };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const handleNextPage = () => {
-        if (currentPage < (totalCountries.totalCount - (countriesPerPage - 1))) {
-        setCurrentPage(prevState => prevState + countriesPerPage);
-        }
-    };
-    
-    const handlePreviousPage = () => {
-        if (currentPage > 0) {
-        setCurrentPage(prevState => prevState - countriesPerPage);
-        }
-    };
+  useEffect(() => {
+    fetchCountryData();
+  }, [currentPage]);
 
-    useEffect(() => {
-        fetchCountryData();
-    }, [currentPage]);
-
-    const elements = countries.map((country) => {
-        return (
-            <>
-                <div key={country.code} className='bg-gray-800 text-white max-w-sm rounded overflow-hidden shadow-lg p-5'>
-                    <div className='flex justify-between'>
-                        <h1 className='p-2'>
-                            {country.name}
-                        </h1>
-                        <Link href={`/country/${country.code}`}>
-                            <button className='bg-blue-500 hover:bg-blue-700 p-2 text-white font-bold border border-blue-700 rounded'>
-                                More Info
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-            </>
-        )
-    });
+  const elements = countries.map((country) => (
+    <div key={country.code} className='bg-gray-800 text-white max-w-sm rounded overflow-hidden shadow-lg p-5'>
+      <div className='flex justify-between items-center space-x-4'>
+        <h1 className='text-xl p-2 font-bold'>
+          {country.name}
+        </h1>
+        <Link href={`/country/${country.code}`}>
+          <button className='bg-blue-500 hover:bg-blue-700 p-2 text-white font-bold border border-blue-700 rounded'>
+            More Info
+          </button>
+        </Link>
+        <button
+          className={`p-2 text-xl ${favorites.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
+          onClick={() => toggleFavorite(country)}
+        >
+          {favorites.includes(country.code) ? '★' : '☆'}
+        </button>
+      </div>
+    </div>
+  ));
+  
+  
 
   return (
     <div>

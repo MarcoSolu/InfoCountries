@@ -125,4 +125,51 @@ app.post("/register", async (req, res) => {
       }
     });
 
+    
+    app.get('/get-favorites', verifyToken, async (req, res) => {
+      try {
+        
+        const user = req.user; 
+        
+        const favoriteCountries = user.favoriteCountries;
+
+        res.status(200).json({ favoriteCountries });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+      }
+    });
+
+
+    app.post("/add-favorite", verifyToken, async (req, res) => {
+      try {
+        const { countryCode } = req.body;
+        const { user } = req;
+        user.favoriteCountries.push(countryCode);
+        await user.save();
+        res.status(200).json({ message: "Country added to favorites" });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal Server Error" });
+      }
+    });
+    
+    app.post("/remove-favorite", verifyToken, async (req, res) => {
+      try {
+        const { countryCode } = req.body;
+        const { user } = req;
+        const index = user.favoriteCountries.indexOf(countryCode);
+        if (index !== -1) {
+          user.favoriteCountries.splice(index, 1);
+          await user.save();
+          res.status(200).json({ message: "Country removed from favorites" });
+        } else {
+          res.status(404).json({ message: "Country not found in favorites" });
+        }
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal Server Error" });
+      }
+    });    
+
 module.exports = app;
