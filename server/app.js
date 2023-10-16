@@ -168,6 +168,6 @@ app.post("/register", async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: "Internal Server Error" });
       }
-    });
+    });    
 
 module.exports = app;

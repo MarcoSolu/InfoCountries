@@ -37,20 +37,15 @@ const CountryGrid = () => {
     }
   };
 
-  const addFavorite = async (countryCode) => {
+  const addFavorite = async (countryCode, userToken) => {
     try {
-      const response = await axios.post('https://infocountries.onrender.com/add-favorite', { countryCode });
-      if (response.status === 200) {
-        fetchCountryData(); 
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const removeFavorite = async (countryCode) => {
-    try {
-      const response = await axios.post('https://infocountries.onrender.com/remove-favorite', { countryCode });
+      const headers = {
+        'x-access-token': userToken,
+        'Content-Type': 'application/json',
+      };
+  
+      const response = await axios.post('https://infocountries.onrender.com/add-favorite', { countryCode }, { headers });
+  
       if (response.status === 200) {
         fetchCountryData();
       }
@@ -58,6 +53,24 @@ const CountryGrid = () => {
       console.log(error);
     }
   };
+  
+  const removeFavorite = async (countryCode, userToken) => {
+    try {
+      const headers = {
+        'x-access-token': userToken,
+        'Content-Type': 'application/json',
+      };
+  
+      const response = await axios.post('https://infocountries.onrender.com/remove-favorite', { countryCode }, { headers });
+  
+      if (response.status === 200) {
+        fetchCountryData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   useEffect(() => {
     fetchCountryData();
