@@ -10,7 +10,7 @@ const CountryGrid = () => {
   const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading } = useCountries();
 
   const { userData } = useContext(AuthContext);
-  const userFavoriteCountries = userData.favoriteCountries;
+  const favoriteCountries = userData?.favoriteCountries || [];
 
   const handleSearch = () => {
     setCurrentPage(0);
@@ -30,7 +30,7 @@ const CountryGrid = () => {
   };
 
   const toggleFavorite = (country) => {
-    if (userFavoriteCountries.includes(country.code)) {
+    if (favoriteCountries.includes(country.code)) {
       removeFavorite(country.code);
     } else {
       addFavorite(country.code);
@@ -75,10 +75,10 @@ const CountryGrid = () => {
           </button>
         </Link>
         <button
-          className={`p-2 text-xl ${userFavoriteCountries.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
+          className={`p-2 text-xl ${favoriteCountries.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
           onClick={() => toggleFavorite(country)}
         >
-          {userFavoriteCountries.includes(country.code) ? '★' : '☆'}
+          {favoriteCountries.includes(country.code) ? '★' : '☆'}
         </button>
       </div>
     </div>
