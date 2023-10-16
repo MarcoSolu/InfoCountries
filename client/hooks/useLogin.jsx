@@ -36,11 +36,13 @@ export const useLogin = () => {
             
             console.log(authContext.isAuthenticated);
 
+            const jwtToken = response.data.token;
+
             const favoriteCountriesResponse = await axios.get(
                 'https://infocountries.onrender.com/get-favorites',
                 {
                   headers: {
-                    Authorization: `Bearer ${response.data.token}`,
+                    Authorization: `Bearer ${jwtToken}`,
                   },
                 }
               );
