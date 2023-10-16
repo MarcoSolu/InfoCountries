@@ -4,9 +4,13 @@ import { useCountries } from '@/hooks/useCountries';
 import { FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
 import Loading from './Loading';
+import { AuthContext } from '@/context/AuthContext';
 
 const CountryGrid = () => {
-  const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading, favorites } = useCountries();
+  const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading } = useCountries();
+
+  const { userData } = useContext(AuthContext);
+  const userFavoriteCountries = userData.favoriteCountries;
 
   const handleSearch = () => {
     setCurrentPage(0);
@@ -26,7 +30,7 @@ const CountryGrid = () => {
   };
 
   const toggleFavorite = (country) => {
-    if (favorites.includes(country.code)) {
+    if (userFavoriteCountries.includes(country.code)) {
       removeFavorite(country.code);
     } else {
       addFavorite(country.code);
@@ -71,10 +75,10 @@ const CountryGrid = () => {
           </button>
         </Link>
         <button
-          className={`p-2 text-xl ${favorites.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
+          className={`p-2 text-xl ${userFavoriteCountries.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
           onClick={() => toggleFavorite(country)}
         >
-          {favorites.includes(country.code) ? '★' : '☆'}
+          {userFavoriteCountries.includes(country.code) ? '★' : '☆'}
         </button>
       </div>
     </div>

@@ -125,32 +125,25 @@ app.post("/register", async (req, res) => {
       }
     });
 
-    
-    app.get('/get-favorites', async (req, res) => {
-      try {
-        
-        const user = req.user; 
-        
-        const favoriteCountries = user.favoriteCountries;
-
-        res.status(200).json({ favoriteCountries });
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Internal Server Error' });
-      }
-    });
-
-
     app.post("/add-favorite", async (req, res) => {
       try {
         const { countryCode } = req.body;
         const { user } = req;
-        user.favoriteCountries.push(countryCode);
-        await user.save();
-        res.status(200).json({ message: "Country added to favorites" });
+    
+        if (!user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+    
+        if (!user.favoriteCountries.includes(countryCode)) {
+          user.favoriteCountries.push(countryCode);
+          await user.save();
+          return res.status(200).json({ message: "Country added to favorites" });
+        } else {
+          return res.status(400).json({ message: "Country is already in favorites" });
+        }
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error" });
       }
     });
     
@@ -158,18 +151,23 @@ app.post("/register", async (req, res) => {
       try {
         const { countryCode } = req.body;
         const { user } = req;
+    
+        if (!user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+    
         const index = user.favoriteCountries.indexOf(countryCode);
         if (index !== -1) {
           user.favoriteCountries.splice(index, 1);
           await user.save();
-          res.status(200).json({ message: "Country removed from favorites" });
+          return res.status(200).json({ message: "Country removed from favorites" });
         } else {
-          res.status(404).json({ message: "Country not found in favorites" });
+          return res.status(400).json({ message: "Country not found in favorites" });
         }
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error" });
       }
-    });    
+    });
 
 module.exports = app;

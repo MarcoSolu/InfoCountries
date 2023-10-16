@@ -8,7 +8,6 @@ export const useCountries = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const countriesPerPage = 10;
-  const [favorites, setFavorites] = useState([]);
 
   const fetchCountryData = async () => {
     try {
@@ -42,5 +41,5 @@ export const useCountries = () => {
     }
   };
 
-  return { countries, search, setSearch, isLoading, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, favorites };
+  return { countries, search, setSearch, isLoading, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData };
 };

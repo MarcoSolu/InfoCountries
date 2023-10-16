@@ -36,15 +36,6 @@ export const useLogin = () => {
             
             console.log(authContext.isAuthenticated);
 
-            const favoriteCountriesResponse = await axios.get('https://infocountries.onrender.com/get-favorites');
-        
-            const favoriteCountries = favoriteCountriesResponse.data.favoriteCountries;
-              
-              authContext.dispatch({
-                type: "SET_FAVORITE_COUNTRIES",
-                payload: favoriteCountries,
-              });
-
             router.push('/user/home');
             
         } catch (error) {
