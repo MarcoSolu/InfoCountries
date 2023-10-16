@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useCountries } from '@/hooks/useCountries';
 import { FiSearch } from 'react-icons/fi';
