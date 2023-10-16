@@ -6,18 +6,7 @@ import Link from 'next/link';
 import Loading from './Loading';
 
 const CountryGrid = () => {
-  const {
-    countries,
-    search,
-    setSearch,
-    currentPage,
-    setCurrentPage,
-    totalCountries,
-    countriesPerPage,
-    fetchCountryData,
-    isLoading,
-    favorites,
-  } = useCountries();
+  const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading, favorites } = useCountries();
 
   const handleSearch = () => {
     setCurrentPage(0);
@@ -46,7 +35,7 @@ const CountryGrid = () => {
 
   const addFavorite = async (countryCode) => {
     try {
-      const response = await axios.post('/add-favorite', { countryCode });
+      const response = await axios.post('https://infocountries.onrender.com/add-favorite', { countryCode });
       if (response.status === 200) {
         fetchCountryData(); 
       }
@@ -57,7 +46,7 @@ const CountryGrid = () => {
 
   const removeFavorite = async (countryCode) => {
     try {
-      const response = await axios.post('/remove-favorite', { countryCode });
+      const response = await axios.post('https://infocountries.onrender.com/remove-favorite', { countryCode });
       if (response.status === 200) {
         fetchCountryData();
       }

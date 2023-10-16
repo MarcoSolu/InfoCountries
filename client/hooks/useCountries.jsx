@@ -42,15 +42,5 @@ export const useCountries = () => {
     }
   };
 
-  const toggleFavorite = (country) => {
-    const isFavorite = favorites.includes(country.code);
-
-    if (isFavorite) {
-      setFavorites(favorites.filter((code) => code !== country.code));
-    } else {
-      setFavorites([...favorites, country.code]);
-    }
-  };
-
-  return { countries, search, setSearch, isLoading, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, favorites, toggleFavorite };
+  return { countries, search, setSearch, isLoading, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, favorites };
 };

@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const User = require('./models/User');
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const verifyToken = require('./middleware/auth');
 
 const app = express();
 
@@ -85,7 +84,7 @@ app.post("/register", async (req, res) => {
         
               user.token = token;
         
-              return res.status(200).json(user, token);
+              return res.status(200).json({ user, token });
             }
             return res.status(400).send("Invalid Credentials");
           } catch (err) {
@@ -127,7 +126,7 @@ app.post("/register", async (req, res) => {
     });
 
     
-    app.get('/get-favorites', verifyToken, async (req, res) => {
+    app.get('/get-favorites', async (req, res) => {
       try {
         
         const user = req.user; 
@@ -142,7 +141,7 @@ app.post("/register", async (req, res) => {
     });
 
 
-    app.post("/add-favorite", verifyToken, async (req, res) => {
+    app.post("/add-favorite", async (req, res) => {
       try {
         const { countryCode } = req.body;
         const { user } = req;
@@ -155,7 +154,7 @@ app.post("/register", async (req, res) => {
       }
     });
     
-    app.post("/remove-favorite", verifyToken, async (req, res) => {
+    app.post("/remove-favorite", async (req, res) => {
       try {
         const { countryCode } = req.body;
         const { user } = req;

@@ -36,19 +36,9 @@ export const useLogin = () => {
             
             console.log(authContext.isAuthenticated);
 
-            const jwtToken = response.data.token;
-
-            const favoriteCountriesResponse = await axios.get(
-                'https://infocountries.onrender.com/get-favorites',
-                {
-                  headers: {
-                    Authorization: `Bearer ${jwtToken}`,
-                  },
-                }
-              );
+            const favoriteCountriesResponse = await axios.get('https://infocountries.onrender.com/get-favorites');
         
-              const favoriteCountries = favoriteCountriesResponse.data.favoriteCountries;
-        
+            const favoriteCountries = favoriteCountriesResponse.data.favoriteCountries;
               
               authContext.dispatch({
                 type: "SET_FAVORITE_COUNTRIES",
