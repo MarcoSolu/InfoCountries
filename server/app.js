@@ -85,7 +85,7 @@ app.post("/register", async (req, res) => {
         
               user.token = token;
         
-              return res.status(200).json({ user, token });
+              return res.status(200).json(user, token);
             }
             return res.status(400).send("Invalid Credentials");
           } catch (err) {
