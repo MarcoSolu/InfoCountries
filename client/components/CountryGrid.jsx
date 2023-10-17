@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useCountries } from '@/hooks/useCountries';
 import Link from 'next/link';
@@ -9,7 +9,8 @@ const CountryGrid = () => {
   const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading } = useCountries();
 
   const { userData } = useContext(AuthContext);
-  const favoriteCountries = userData?.favoriteCountries || [];
+
+  const [favoriteCountries, setFavoriteCountries] = useState(userData.favoriteCountries || []);
 
   console.log(userData);
 
@@ -37,7 +38,7 @@ const CountryGrid = () => {
       addFavorite(country.code, userData.token);
     }
   };
-
+  
   const addFavorite = async (countryCode) => {
     try {
       const headers = {
@@ -52,6 +53,7 @@ const CountryGrid = () => {
       const response = await axios.post('https://infocountries.onrender.com/add-favorite', requestData, { headers });
   
       if (response.status === 200) {
+        setFavoriteCountries([...favoriteCountries, countryCode]);
         fetchCountryData();
       }
     } catch (error) {
@@ -67,19 +69,19 @@ const CountryGrid = () => {
   
       const requestData = {
         countryCode,
-        userData: userData, 
+        userData: userData,
       };
   
       const response = await axios.post('https://infocountries.onrender.com/remove-favorite', requestData, { headers });
   
       if (response.status === 200) {
+        setFavoriteCountries(favoriteCountries.filter((code) => code !== countryCode));
         fetchCountryData();
       }
     } catch (error) {
       console.log(error);
     }
-  };
-  
+  };  
 
   useEffect(() => {
     fetchCountryData();

@@ -11,7 +11,6 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       const { user } = action.payload;
-      const existingFavoriteCountries = state ? state.favoriteCountries : [];
       return {
         name: user?.name ?? "",
         email: user?.email ?? "",
@@ -19,7 +18,6 @@ const authReducer = (state, action) => {
         location: user?.location ?? null,
         id: user?.id ?? "",
         isLoggedIn: true,
-        favoriteCountries: existingFavoriteCountries
       };
     case "LOGOUT":
       return {

@@ -133,21 +133,18 @@ app.post("/register", async (req, res) => {
           return res.status(401).json({ message: "Unauthorized" });
         }
     
-        const user = await User.findById(userData.id); // Find the user by their ID
+        
+        const user = await User.findByIdAndUpdate(
+          userData.id,
+          { $addToSet: { favoriteCountries: countryCode } }, 
+          { new: true } 
+        );
     
         if (!user) {
           return res.status(404).json({ message: "User not found" });
         }
     
-        // Continue processing with the user
-    
-        if (!user.favoriteCountries.includes(countryCode)) {
-          user.favoriteCountries.push(countryCode);
-          await user.save();
-          return res.status(200).json({ message: "Country added to favorites" });
-        } else {
-          return res.status(400).json({ message: "Country is already in favorites" });
-        }
+        res.status(200).json({ message: "Country added to favorites", user: user });
       } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Internal Server Error" });
@@ -162,25 +159,22 @@ app.post("/register", async (req, res) => {
           return res.status(401).json({ message: "Unauthorized" });
         }
     
-        const user = await User.findById(userData.id); 
+        
+        const user = await User.findByIdAndUpdate(
+          userData.id,
+          { $pull: { favoriteCountries: countryCode } }, 
+          { new: true } 
+        );
     
         if (!user) {
           return res.status(404).json({ message: "User not found" });
         }
     
-    
-        const index = user.favoriteCountries.indexOf(countryCode);
-        if (index !== -1) {
-          user.favoriteCountries.splice(index, 1);
-          await user.save();
-          return res.status(200).json({ message: "Country removed from favorites" });
-        } else {
-          return res.status(400).json({ message: "Country not found in favorites" });
-        }
+        res.status(200).json({ message: "Country removed from favorites", user: user });
       } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Internal Server Error" });
       }
-    });         
+    });            
 
 module.exports = app;
