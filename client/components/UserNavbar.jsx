@@ -12,8 +12,6 @@ const UserNavbar = () => {
 
     const { userData } = useContext(AuthContext);
 
-    console.log(userData);
-
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
