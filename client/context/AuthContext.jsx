@@ -38,16 +38,6 @@ const authReducer = (state, action) => {
         passwordChangeSuccess: undefined,
         passwordChangeMessage: undefined,
       };
-    case "ADD_FAVORITE_COUNTRY":
-      return {
-        ...state,
-        favoriteCountries: [...state.favoriteCountries, action.payload.country],
-      };
-    case "REMOVE_FAVORITE_COUNTRY":
-      return {
-        ...state,
-        favoriteCountries: state.favoriteCountries.filter(country => country !== action.payload.country),
-      };
     default:
       return state;
   }
