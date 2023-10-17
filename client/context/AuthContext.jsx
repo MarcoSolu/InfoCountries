@@ -17,6 +17,7 @@ const authReducer = (state, action) => {
         token: user?.token ?? "",
         location: user?.location ?? null,
         id: user?.id ?? "",
+        favoriteCountries: user?.favoriteCountries ?? [],
         isLoggedIn: true,
       };
     case "LOGOUT":

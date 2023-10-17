@@ -10,8 +10,6 @@ const CountryGrid = () => {
 
   const { userData } = useContext(AuthContext);
 
-  const [favoriteCountries, setFavoriteCountries] = useState(userData?.favoriteCountries || []);
-
   console.log(userData);
 
   const handleSearch = () => {
@@ -32,54 +30,54 @@ const CountryGrid = () => {
   };
 
   const toggleFavorite = (country) => {
-    if (favoriteCountries.includes(country.code)) {
-      removeFavorite(country.code, userData.token);
+    if (userData.favoriteCountries.includes(country.code)) {
+      removeFavorite(country.code);
     } else {
-      addFavorite(country.code, userData.token);
+      addFavorite(country.code);
     }
   };
   
   const addFavorite = async (countryCode) => {
     try {
-      const headers = {
-        'Content-Type': 'application/json',
-      };
+      const userId = userData.id; 
   
-      const requestData = {
-        countryCode,
-        userData: userData,
-      };
-  
-      const response = await axios.post('https://infocountries.onrender.com/add-favorite', requestData, { headers });
+      const response = await axios.post('/add-favorite', { userId, countryCode });
   
       if (response.status === 200) {
-        setFavoriteCountries([...favoriteCountries, countryCode]);
-        fetchCountryData();
+        dispatch({
+          type: 'LOGIN',
+          payload: {
+            ...userData,
+            favoriteCountries: [...userData.favoriteCountries, countryCode],
+          },
+        });
+      } else {
+        console.log("200 error");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   
   const removeFavorite = async (countryCode) => {
     try {
-      const headers = {
-        'Content-Type': 'application/json',
-      };
+      const userId = userData.id;
   
-      const requestData = {
-        countryCode,
-        userData: userData,
-      };
-  
-      const response = await axios.post('https://infocountries.onrender.com/remove-favorite', requestData, { headers });
+      const response = await axios.post('/remove-favorite', { userId, countryCode });
   
       if (response.status === 200) {
-        setFavoriteCountries(favoriteCountries.filter((code) => code !== countryCode));
-        fetchCountryData();
+        dispatch({
+          type: 'LOGIN',
+          payload: {
+            ...userData,
+            favoriteCountries: userData.favoriteCountries.filter(code => code !== countryCode),
+          },
+        });
+      } else {
+        console.log("200 error");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };  
 
@@ -99,16 +97,14 @@ const CountryGrid = () => {
           </button>
         </Link>
         <button
-          className={`p-2 text-xl ${favoriteCountries.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
+          className={`p-2 text-xl ${userData.favoriteCountries.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
           onClick={() => toggleFavorite(country)}
         >
-          {favoriteCountries.includes(country.code) ? '★' : '☆'}
+          {userData.favoriteCountries.includes(country.code) ? '★' : '☆'}
         </button>
       </div>
     </div>
-  ));
-  
-  
+  ));  
 
   return (
     <div>

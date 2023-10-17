@@ -127,53 +127,51 @@ app.post("/register", async (req, res) => {
 
     app.post("/add-favorite", async (req, res) => {
       try {
-        const { countryCode, userData } = req.body;
+        const { userId, countryCode } = req.body;
     
-        if (!userData) {
-          return res.status(401).json({ message: "Unauthorized" });
-        }
-    
-        
-        const user = await User.findByIdAndUpdate(
-          userData.id,
-          { $addToSet: { favoriteCountries: countryCode } }, 
-          { new: true } 
-        );
+        const user = await UserModel.findById(userId);
     
         if (!user) {
-          return res.status(404).json({ message: "User not found" });
+          return res.status(404).json({ error: "User not found" });
         }
     
-        res.status(200).json({ message: "Country added to favorites", user: user });
-      } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        if (!user.favoriteCountries.includes(countryCode)) {
+          user.favoriteCountries.push(countryCode);
+          await user.save();
+    
+          res.json({ message: "Country added to favorites" });
+        } else {
+          res.json({ message: "Country is already in favorites" });
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Server error" });
       }
     });
     
     app.post("/remove-favorite", async (req, res) => {
       try {
-        const { countryCode, userData } = req.body;
+        const { userId, countryCode } = req.body; 
     
-        if (!userData) {
-          return res.status(401).json({ message: "Unauthorized" });
-        }
-    
-        
-        const user = await User.findByIdAndUpdate(
-          userData.id,
-          { $pull: { favoriteCountries: countryCode } }, 
-          { new: true } 
-        );
+        const user = await UserModel.findById(userId);
     
         if (!user) {
-          return res.status(404).json({ message: "User not found" });
+          return res.status(404).json({ error: "User not found" });
         }
     
-        res.status(200).json({ message: "Country removed from favorites", user: user });
-      } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        if (user.favoriteCountries.includes(countryCode)) {
+          user.favoriteCountries = user.favoriteCountries.filter(
+            (code) => code !== countryCode
+          );
+          await user.save();
+    
+          res.json({ message: "Country removed from favorites" });
+        } else {
+          res.json({ message: "Country is not in favorites" });
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Server error" });
       }
     });            
 
