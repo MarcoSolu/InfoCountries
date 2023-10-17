@@ -32,9 +32,9 @@ const CountryGrid = () => {
 
   const toggleFavorite = (country) => {
     if (favoriteCountries.includes(country.code)) {
-      removeFavorite(country.code);
+      removeFavorite(country.code, userData.token);
     } else {
-      addFavorite(country.code);
+      addFavorite(country.code, userData.token);
     }
   };
 
