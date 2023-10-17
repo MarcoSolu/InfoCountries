@@ -10,7 +10,7 @@ export const AuthContext = createContext({
 const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      // const existingFavoriteCountries = state ? state.favoriteCountries : [];
+      const existingFavoriteCountries = state ? state.favoriteCountries : [];
       return {
         name: action.payload?.name ?? "",
         email: action.payload?.email ?? "",
@@ -18,7 +18,7 @@ const authReducer = (state, action) => {
         location: action.payload?.location ?? null,
         id: action.payload?.id ?? "",
         isLoggedIn: true,
-        // favoriteCountries: existingFavoriteCountries
+        favoriteCountries: existingFavoriteCountries
       };
     case "LOGOUT":
       return {
