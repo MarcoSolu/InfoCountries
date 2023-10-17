@@ -10,7 +10,7 @@ const CountryGrid = () => {
 
   const { userData } = useContext(AuthContext);
 
-  const [favoriteCountries, setFavoriteCountries] = useState(userData.favoriteCountries || []);
+  const [favoriteCountries, setFavoriteCountries] = useState(userData?.favoriteCountries || []);
 
   console.log(userData);
 
