@@ -33,8 +33,6 @@ export const useLogin = () => {
                 type: "LOGIN",
                 payload: response.data, 
             });
-            
-            console.log(authContext.isAuthenticated);
 
             router.push('/user/home');
             
