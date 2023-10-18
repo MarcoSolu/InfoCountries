@@ -98,7 +98,7 @@ const CountryGrid = () => {
         </Link>
         <button
           className={`p-2 text-xl ${userData.favoriteCountries.includes(country.code) ? 'text-yellow-500' : 'text-gray-500'}`}
-          onClick={() => toggleFavorite(country)}
+          onClick={() => toggleFavorite(country.code)}
         >
           {userData.favoriteCountries.includes(country.code) ? '★' : '☆'}
         </button>
