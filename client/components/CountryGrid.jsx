@@ -8,7 +8,7 @@ import { AuthContext } from '@/context/AuthContext';
 const CountryGrid = () => {
   const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading } = useCountries();
 
-  const { userData } = useContext(AuthContext);
+  const { userData, dispatch } = useContext(AuthContext);
 
   console.log(userData);
 
