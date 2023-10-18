@@ -30,11 +30,11 @@ const CountryGrid = () => {
     }
   };
 
-  const toggleFavorite = (country) => {
-    if (userData.favoriteCountries.includes(country.code)) {
-      removeFavorite(country.code);
+  const toggleFavorite = (code) => {
+    if (userData.favoriteCountries.includes(code)) {
+      removeFavorite(code);
     } else {
-      addFavorite(country.code);
+      addFavorite(code);
     }
   };
   
@@ -46,14 +46,11 @@ const CountryGrid = () => {
   
       if (response.status === 200) {
         dispatch({
-          type: 'LOGIN',
-          payload: {
-            ...userData,
-            favoriteCountries: [...userData.favoriteCountries, countryCode],
-          },
+          type: 'ADD_FAVORITE_COUNTRY',
+          payload: { countryCode },
         });
       } else {
-        console.log("200 error");
+        console.log("Failed to add country to favorites");
       }
     } catch (error) {
       console.error(error);
@@ -68,14 +65,11 @@ const CountryGrid = () => {
   
       if (response.status === 200) {
         dispatch({
-          type: 'LOGIN',
-          payload: {
-            ...userData,
-            favoriteCountries: userData.favoriteCountries.filter(code => code !== countryCode),
-          },
+          type: 'REMOVE_FAVORITE_COUNTRY',
+          payload: { countryCode },
         });
       } else {
-        console.log("200 error");
+        console.log("Failed to remove country from favorites");
       }
     } catch (error) {
       console.error(error);
