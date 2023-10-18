@@ -10,6 +10,7 @@ const CountryGrid = () => {
 
   const { userData, dispatch } = useContext(AuthContext);
 
+  console.log(countries);
   console.log(userData);
 
   const handleSearch = () => {
