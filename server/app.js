@@ -128,9 +128,9 @@ app.post("/register", async (req, res) => {
 
     app.post("/add-favorite", async (req, res) => {
       try {
-        const { userId, countryCode } = req.body;
+        const { userEmail, countryCode } = req.body;
     
-        const user = await UserModel.findById(userId);
+        const user = await UserModel.findOne(userEmail);
     
         if (!user) {
           return res.status(404).json({ error: "User not found" });
@@ -152,9 +152,9 @@ app.post("/register", async (req, res) => {
     
     app.post("/remove-favorite", async (req, res) => {
       try {
-        const { userId, countryCode } = req.body; 
+        const { userEmail, countryCode } = req.body; 
     
-        const user = await UserModel.findById(userId);
+        const user = await UserModel.findOne(userEmail);
     
         if (!user) {
           return res.status(404).json({ error: "User not found" });

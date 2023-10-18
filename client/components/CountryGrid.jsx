@@ -39,9 +39,9 @@ const CountryGrid = () => {
   
   const addFavorite = async (countryCode) => {
     try {
-      const userId = userData.id; 
+      const userEmail = userData.email; 
   
-      const response = await axios.post('https://infocountries.onrender.com/add-favorite', { userId, countryCode });
+      const response = await axios.post('https://infocountries.onrender.com/add-favorite', { userEmail, countryCode });
   
       if (response.status === 200) {
         dispatch({
@@ -61,9 +61,9 @@ const CountryGrid = () => {
   
   const removeFavorite = async (countryCode) => {
     try {
-      const userId = userData.id;
+      const userEmail = userData.email;
   
-      const response = await axios.post('https://infocountries.onrender.com/remove-favorite', { userId, countryCode });
+      const response = await axios.post('https://infocountries.onrender.com/remove-favorite', { userEmail, countryCode });
   
       if (response.status === 200) {
         dispatch({
