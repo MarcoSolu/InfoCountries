@@ -30,9 +30,9 @@ const CountryGrid = () => {
     }
   };
 
-  console.log(userData.email);
-  console.log(countries);
   
+  console.log(countries);
+
   const toggleFavorite = (code) => {
     if (userData.favoriteCountries.includes(code)) {
       removeFavorite(code);
