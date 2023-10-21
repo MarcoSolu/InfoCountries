@@ -2,8 +2,8 @@ require("dotenv").config();
 require("./config/database").connect();
 const express = require("express");
 const cors = require("cors");
-const UserControllers = require("./controllers/UserControllers");
-const FavoriteCountriesController = require("./controllers/FavouriteCountriesController");
+const UserController = require("./controllers/UsersController");
+const FavoriteCountriesController = require("./controllers/FavoriteCountriesController");
 
 const app = express();
 
@@ -14,9 +14,9 @@ app.use(cors({
   credentials: true  
 }));
 
-app.post("/register", UserControllers.registerUser);
-app.post("/login", UserControllers.loginUser);
-app.post("/change-password", UserControllers.changePassword);
+app.post("/register", UserController.registerUser);
+app.post("/login", UserController.loginUser);
+app.post("/change-password", UserController.changePassword);
 app.post("/add-favorite", FavoriteCountriesController.addFavoriteCountry);
 app.post("/remove-favorite", FavoriteCountriesController.removeFavoriteCountry);            
 

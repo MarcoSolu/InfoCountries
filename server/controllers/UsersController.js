@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 const User = require('../models/User');
 
 const registerUser = async (req, res) => {
-    app.post("/register", async (req, res) => {
-    
         try {
             
             const { name, email, password } = req.body;
@@ -43,13 +41,11 @@ const registerUser = async (req, res) => {
             if (!res.headersSent) {
               res.status(500).send("Internal Server Error");
           }
-        }
-        });
+        };
   };
   
   
   const loginUser = async (req, res) => {
-    app.post("/login", async (req, res) => {
         try {
             
             const { email, password } = req.body;
@@ -80,13 +76,10 @@ const registerUser = async (req, res) => {
             if (!res.headersSent) {
               res.status(500).send("Internal Server Error");
           }
-          }
-    
-    });
+          };
   };
   
   const changePassword = async (req, res) => {
-    app.post("/change-password", async (req, res) => {
         try {
           const { email, newPassword } = req.body;
       
@@ -112,8 +105,7 @@ const registerUser = async (req, res) => {
           if (!res.headersSent) {
             res.status(500).send("Internal Server Error");
         }
-        }
-      });
+        };
   };
 
 module.exports = { registerUser, loginUser, changePassword };

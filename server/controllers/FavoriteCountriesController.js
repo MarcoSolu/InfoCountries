@@ -1,7 +1,6 @@
 const UserModel = require("../models/User");
 
 const addFavoriteCountry = async (req, res) => {
-    app.post("/add-favorite", async (req, res) => {
         try {
           const { userEmail, countryCode } = req.body;
   
@@ -24,12 +23,10 @@ const addFavoriteCountry = async (req, res) => {
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: "Server error" });
-        }
-      });
+        };
   };
 
   const removeFavoriteCountry = async (req, res) => {
-    app.post("/remove-favorite", async (req, res) => {
         try {
           const { userEmail, countryCode } = req.body; 
   
@@ -54,8 +51,7 @@ const addFavoriteCountry = async (req, res) => {
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: "Server error" });
-        }
-      });
+        };
   };
 
 module.exports = { addFavoriteCountry, removeFavoriteCountry };
