@@ -129,7 +129,7 @@ app.post("/register", async (req, res) => {
 
         console.log("Received request:", userEmail, countryCode);
     
-        const user = await UserModel.findOne(userEmail);
+        const user = await UserModel.findOne({ email: userEmail });
     
         if (!user) {
           return res.status(404).json({ error: "User not found" });
@@ -155,7 +155,7 @@ app.post("/register", async (req, res) => {
 
         console.log("Received request:", userEmail, countryCode);
     
-        const user = await UserModel.findOne(userEmail);
+        const user = await UserModel.findOne({ email: userEmail });
     
         if (!user) {
           return res.status(404).json({ error: "User not found" });

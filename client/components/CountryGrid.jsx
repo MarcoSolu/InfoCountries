@@ -59,6 +59,7 @@ const CountryGrid = () => {
       } else {
         console.log("Failed to add country to favorites");
       }
+      console.log(userData.favoriteCountries);
     } catch (error) {
       console.error(error);
     }
@@ -85,6 +86,7 @@ const CountryGrid = () => {
       } else {
         console.log("Failed to remove country from favorites");
       }
+      console.log(userData.favoriteCountries);
     } catch (error) {
       console.error(error);
     }
