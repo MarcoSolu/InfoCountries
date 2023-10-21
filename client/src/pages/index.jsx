@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import JoinDiv from './components/JoinDiv';
+import Navbar from '../components/Navbar';
+import JoinDiv from '../components/JoinDiv';
 
 const Home = () => {
   return (
