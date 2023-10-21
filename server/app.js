@@ -129,6 +129,8 @@ app.post("/register", async (req, res) => {
     app.post("/add-favorite", async (req, res) => {
       try {
         const { userEmail, countryCode } = req.body;
+
+        console.log("Received request:", userEmail, countryCode);
     
         const user = await UserModel.findOne(userEmail);
     
@@ -153,6 +155,8 @@ app.post("/register", async (req, res) => {
     app.post("/remove-favorite", async (req, res) => {
       try {
         const { userEmail, countryCode } = req.body; 
+
+        console.log("Received request:", userEmail, countryCode);
     
         const user = await UserModel.findOne(userEmail);
     
