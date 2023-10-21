@@ -12,10 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({ 
-  origin: [
-    'https://info-countries-m5gig7o8e-marcosolus-projects.vercel.app',
-    'https://info-countries-eight.vercel.app'
-  ],
+  origin: ['https://info-countries-eight.vercel.app'],
   credentials: true  
 }));
 
