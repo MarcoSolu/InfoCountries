@@ -47,7 +47,8 @@ const CountryGrid = () => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-      }
+      },
+      withCredentials: true,
       });
   
       if (response.status === 200) {
@@ -72,7 +73,8 @@ const CountryGrid = () => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-      }
+      },
+      withCredentials: true,
       });
   
       if (response.status === 200) {
