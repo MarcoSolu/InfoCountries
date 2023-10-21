@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import TitleNavbar from '@/components/TitleNavbar';
+import TitleNavbar from '../../components/TitleNavbar';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AuthContext } from '@/context/AuthContext';
-import Loading from '@/components/Loading';
+import { AuthContext } from '../../context/AuthContext';
+import Loading from '../../components/Loading';
 
 const countryDetails = () => {
 

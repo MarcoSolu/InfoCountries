@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { AuthContext } from "@/context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 const useLogout = () => {

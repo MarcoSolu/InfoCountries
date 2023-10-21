@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import wallpaperPic from '../public/images/mainWallpaper.jpg';
+import wallpaperPic from '../../public/images/mainWallpaper.jpg';
 import { useRouter } from 'next/router';
 
 import Footer from './Footer';

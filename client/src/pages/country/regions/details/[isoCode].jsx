@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import TitleNavbar from '@/components/TitleNavbar';
-import { AuthContext } from '@/context/AuthContext';
-import Loading from '@/components/Loading';
+import TitleNavbar from '../../../../components/TitleNavbar';
+import { AuthContext } from '../../../../context/AuthContext';
+import Loading from '../../../../components/Loading';
 
 const regionsDetails = () => {
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { RxAvatar } from 'react-icons/rx';
-import useLogout from '@/hooks/useLogout';
-import { AuthContext } from '@/context/AuthContext';
+import useLogout from '../hooks/useLogout';
+import { AuthContext } from '../context/AuthContext';
 import Link from 'next/link';
 
 const UserNavbar = () => {

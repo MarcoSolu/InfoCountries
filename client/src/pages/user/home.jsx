@@ -1,8 +1,8 @@
 import { useEffect, useContext } from 'react';
-import UserNavbar from '@/components/UserNavbar';
-import CountryGrid from '@/components/CountryGrid';
+import UserNavbar from '../../components/UserNavbar';
+import CountryGrid from '../../components/CountryGrid';
 import { useRouter } from 'next/router';
-import { AuthContext } from '@/context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 const UserHome = () => {
 

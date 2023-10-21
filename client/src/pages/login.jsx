@@ -1,9 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useLogin } from '@/hooks/useLogin';
-import Navbar from '@/components/Navbar';
-import LoginError from '@/components/LoginError';
-import Loading from '@/components/Loading';
+import { useLogin } from '../hooks/useLogin';
+import Navbar from '../components/Navbar';
+import LoginError from '../components/LoginError';
+import Loading from '../components/Loading';
 
 const Login = () => {
 

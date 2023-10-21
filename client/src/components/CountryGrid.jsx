@@ -1,9 +1,9 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import axios from 'axios';
-import { useCountries } from '@/hooks/useCountries';
+import { useCountries } from '../hooks/useCountries';
 import Link from 'next/link';
 import Loading from './Loading';
-import { AuthContext } from '@/context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 
 const CountryGrid = () => {
   const { countries, search, setSearch, currentPage, setCurrentPage, totalCountries, countriesPerPage, fetchCountryData, isLoading } = useCountries();

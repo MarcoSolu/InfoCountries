@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import linkedinLogo from '../public/images/linkedIn-mark.png';
+import linkedinLogo from '../../public/images/linkedIn-mark.png';
  
 
 const Footer = () => {

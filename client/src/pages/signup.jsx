@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useSignup } from '@/hooks/useSignup';
+import { useSignup } from '../hooks/useSignup';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import SignupError from '@/components/SignupError';
-import Loading from '@/components/Loading';
+import Navbar from '../components/Navbar';
+import SignupError from '../components/SignupError';
+import Loading from '../components/Loading';
 
 
 const SignUp = () => {

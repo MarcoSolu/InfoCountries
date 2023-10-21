@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useNewPassword } from '@/hooks/useNewPassword';
-import Navbar from '@/components/Navbar';
-import Loading from '@/components/Loading';
+import { useNewPassword } from '../hooks/useNewPassword';
+import Navbar from '../components/Navbar';
+import Loading from '../components/Loading';
 
 const changePassword = () => {
 

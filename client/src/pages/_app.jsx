@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "@/components/Layout";
+import Layout from "../components/Layout";
 import '../styles/global.css';
 import Head from "next/head";
-import { AuthContextProvider } from "@/context/AuthContext";
+import { AuthContextProvider } from "../context/AuthContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
